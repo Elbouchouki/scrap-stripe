@@ -6,9 +6,7 @@ import { StripeApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 
-const dynamic = 'force-dynamic'
-const revalidate = 0
-
+export const revalidate = 0; // this is the new line added
 
 export async function GET(request: NextRequest) {
   const stripeResponse: StripeApiResponse = await (
@@ -31,13 +29,11 @@ export async function GET(request: NextRequest) {
       html: get_html(toBeAdded.length, toBeAdded)
     })
   }
-  let response = NextResponse.json({
+
+  return NextResponse.json({
     newApps: toBeAdded,
     timestamp: new Date().toISOString()
   })
-
-  response.headers.set('Cache-Control', 's-maxage=0, stale-while-revalidate')
-
-  return response
 }
+
 

@@ -4,5 +4,15 @@
       "path": "/api/stripe",
       "schedule": "0 1 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/stripe/route.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "app/api/apps/route.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }
