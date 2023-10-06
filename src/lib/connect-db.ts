@@ -9,7 +9,7 @@ export const connectToDataBase = async () => {
   }
   try {
     await mongoose.connect(process.env.DATABASE_URL as string, {
-      dbName: "SCRAPPER_DB",
+      dbName: process.env.DATABASE_NAME,
     });
     isConnected = true;
   } catch (error) {

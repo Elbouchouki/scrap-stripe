@@ -44,6 +44,10 @@ const StripeAppSchema = new mongoose.Schema({
   website_url: String,
   works_with: [String],
   key_features: [keyFeatureSchema],
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 export const StripeAppModel = mongoose.model("StripeApp", StripeAppSchema)
