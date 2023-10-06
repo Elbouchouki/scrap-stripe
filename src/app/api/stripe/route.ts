@@ -26,9 +26,13 @@ export async function GET(request: NextRequest) {
       html: get_html(toBeAdded.length, toBeAdded)
     })
   }
-  return NextResponse.json({
-    newApps: toBeAdded,
+  let response = NextResponse.json({
+    data: stripeResponse,
     timestamp: new Date().toISOString()
   })
+
+  response.headers.set('Cache-Control', 's-maxage=0, stale-while-revalidate')
+
+  return response
 }
 
