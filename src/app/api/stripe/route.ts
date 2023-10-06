@@ -1,6 +1,5 @@
 import { connectToDataBase } from "@/lib/connect-db";
 import { get_html } from "@/lib/email_html";
-import { resend } from "@/lib/resend";
 import { StripeAppModel } from "@/schema/StripeApp";
 import { StripeApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -22,12 +21,19 @@ export async function GET(request: NextRequest) {
 
   if (toBeAdded.length > 0) {
     await StripeAppModel.insertMany(toBeAdded, { ordered: false })
-    resend.sendEmail({
-      from: 'StripeScrapper <onboarding@resend.dev>',
-      to: process.env.RECIPIENT_EMAIL as string,
-      subject: `${process.env.APP_NAME || "Stripe Scrapper"} | New Apps Added`,
-      html: get_html(toBeAdded.length, toBeAdded)
-    })
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.RESEND_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "StripeScrapper <onboarding@resend.dev>",
+        to: [process.env.RECIPIENT_EMAIL as string],
+        subject: `${process.env.APP_NAME || "Stripe Scrapper"} | New Apps Added`,
+        html: get_html(toBeAdded.length, toBeAdded)
+      }),
+    });
   }
 
   return NextResponse.json({
