@@ -6,7 +6,7 @@ import { StripeApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export const revalidate = 0; // this is the new line added
+export const revalidate = 0;
 
 export async function GET(request: NextRequest) {
   const stripeResponse: StripeApiResponse = await (
