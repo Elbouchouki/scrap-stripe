@@ -5,6 +5,11 @@ import { StripeAppModel } from "@/schema/StripeApp";
 import { StripeApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
+
+const dynamic = 'force-dynamic'
+const revalidate = 0
+
+
 export async function GET(request: NextRequest) {
   const stripeResponse: StripeApiResponse = await (
     await fetch(process.env.STRIPE_MARKETPLACE_URL as string, { cache: 'no-store' })
@@ -27,7 +32,7 @@ export async function GET(request: NextRequest) {
     })
   }
   let response = NextResponse.json({
-    data: stripeResponse,
+    newApps: toBeAdded,
     timestamp: new Date().toISOString()
   })
 
