@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/stripe",
+      "schedule": "0 * * ? * *"
+    }
+  ]
+}
