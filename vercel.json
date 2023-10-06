@@ -2,7 +2,13 @@
   "crons": [
     {
       "path": "/api/stripe",
-      "schedule": "0 * * ? * *"
+      "schedule": "0 1 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/stripe/route.ts": {
+      "memory": 3008,
+      "maxDuration": 60
+    }
+  }
 }
